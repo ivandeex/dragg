@@ -1,16 +1,18 @@
 Django==1.9.8
-django-debug-toolbar==1.5
+dj-database-url==0.4.1
+django-unixtimestampfield==0.3.9
+psycopg2==2.6.2
+pytz==2016.6.1
+pyjade==4.0.0
 django-jinja==2.2.0
 Jinja2==2.8
 django-webpack-loader==0.3.3
 djangorestframework==3.4.1
 Pillow==3.3.0
-psycopg2==2.6.2
-pyjade==4.0.0
-pytz==2016.6.1
 six==1.10.0
 
-flake8==3.0.2
+django-debug-toolbar==1.5
 ipdb==0.10.1
 ipython==5.0.0
+flake8==3.0.2
 requests==2.10.0
