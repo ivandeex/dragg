@@ -1,0 +1,8 @@
+files:
+  include:
+    - 'pages/**/*.scss'
+  ignore:
+    - '**/reset.scss'
+
+rules:
+  property-sort-order: 0
