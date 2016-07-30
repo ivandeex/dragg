@@ -16,6 +16,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'please_change_me')
 
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
+SILENCED_SYSTEM_CHECKS = ['fields.W342']
+
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
@@ -25,7 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'newsbox',
+    'nav',
+    'pages',
+    'news',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -72,11 +76,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-TIME_ZONE = 'Europe/Moscow'
 
 
 STATIC_URL = '/static/'

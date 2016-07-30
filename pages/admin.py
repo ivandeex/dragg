@@ -1,20 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from . import models
-
-
-class ReadonlyModelAdmin(object):
-    list_per_page = 50
-    actions = None
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return True
-
-    def has_delete_permission(self, request, obj=None):
-        return False
+from lib.admin import ReadonlyModelAdmin
+from pages import models
 
 
 class NodeRevInline(ReadonlyModelAdmin, admin.StackedInline):
@@ -47,16 +34,6 @@ class NodeAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
     story_url.short_description = _('Story URL')
 
 
-class UrlAliasAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
-    model = models.UrlAlias
-    fields = ('src', 'dst', 'language')
-    list_display = fields
-    list_filter = ('language',)
-    readonly_fields = fields
-    search_fields = ('dst',)
-    ordering = ('src',)
-
-
 class FilterAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
     model = models.Filter
     fields = ('fid', 'format_name', 'delta', 'weight')
@@ -69,30 +46,5 @@ class FilterAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
         return obj.format.name
 
 
-class NewsFeedAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
-    model = models.NewsFeed
-    fields = ('fid', 'title', 'url', 'link', 'refresh', 'checked',
-              'category_list', 'item_count')
-    readonly_fields = fields
-    list_display = ('fid', 'title', 'link', 'category_list', 'checked', 'item_count')
-    list_filter = ('categories__title',)
-    ordering = ('title',)
-
-
-class NewsItemAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
-    model = models.NewsItem
-    list_display = ('iid', 'feed_title', 'title', 'link', 'timestamp')
-    list_filter = ('feed__title', 'feed__categories__title')
-    fields = list_display + ('category_list', 'description')
-    readonly_fields = fields
-    ordering = ('-timestamp',)
-
-    def feed_title(self, obj):
-        return obj.feed.title
-
-
 admin.site.register(models.Node, NodeAdmin)
-admin.site.register(models.UrlAlias, UrlAliasAdmin)
 admin.site.register(models.Filter, FilterAdmin)
-admin.site.register(models.NewsFeed, NewsFeedAdmin)
-admin.site.register(models.NewsItem, NewsItemAdmin)
