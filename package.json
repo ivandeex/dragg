@@ -1,0 +1,28 @@
+{
+  "name": "newsbox",
+  "version": "0.1.0",
+  "description": "A simple CMS working off drupal database.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivandeex/newsbox.git"
+  },
+  "keywords": [
+    "django",
+    "drupal",
+    "postgresql",
+    "jade",
+    "webpack",
+    "sass"
+  ],
+  "author": "ivandeex@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivandeex/newsbox/issues"
+  },
+  "homepage": "https://github.com/ivandeex/newsbox#readme"
+}
