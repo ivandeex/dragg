@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  become: no
+  gather_facts: no
+  tasks:
+    - lineinfile: dest=../.env create=yes mode=0600
+                  line='{{ item|upper }}="{{ public[item] }}"'
+      with_items: '{{ public.keys()|sort }}'
+
+    - lineinfile: dest=../.env create=yes mode=0600
+                  line='{{ item|upper }}="{{ secret[item] }}"'
+      with_items: '{{ secret.keys()|sort }}'
+...

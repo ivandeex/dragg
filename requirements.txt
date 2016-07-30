@@ -16,3 +16,5 @@ ipdb==0.10.1
 ipython==5.0.0
 flake8==3.0.2
 requests==2.10.0
+honcho==0.7.1
+ansible==2.1.1

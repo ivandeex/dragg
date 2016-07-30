@@ -3,9 +3,18 @@ import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'please change me'
+try:
+    from honcho.environ import parse as parse_env
+    with open(os.path.join(BASE_DIR, '.env')) as f:
+        for name, value in parse_env(f.read()).items():
+            os.environ.setdefault(name, value)
+except IOError:
+    pass
 
-DEBUG = True
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'please_change_me')
+
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
 ALLOWED_HOSTS = []
 

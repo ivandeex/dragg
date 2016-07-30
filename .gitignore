@@ -4,3 +4,5 @@
 *.log
 *~
 /temp/
+/.env
+/ansible/secrets.yml
