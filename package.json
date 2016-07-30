@@ -8,6 +8,8 @@
     "clean": "rimraf assets/debug media temp",
     "predebug": "rimraf assets/debug",
     "debug": "webpack --config webpack/debug.js",
+    "preprod": "rimraf assets/prod",
+    "prod": "webpack --config webpack/prod.js -p --progress",
     "test": "mocha"
   },
   "repository": {

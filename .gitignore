@@ -9,3 +9,4 @@
 /node_modules/
 /assets/debug/
 /webpack/stats-debug.json
+/static/

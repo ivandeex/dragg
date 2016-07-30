@@ -2,4 +2,5 @@
 public:
   debug: 0
   port: 8080
+  pythonunbuffered: 1  # this makes gunicorn print django stdout without delay
 ...

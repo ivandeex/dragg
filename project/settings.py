@@ -18,7 +18,8 @@ DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
 SILENCED_SYSTEM_CHECKS = ['fields.W342']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -97,10 +98,17 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-if True:
+if DEBUG:
     WEBPACK_LOADER = {
         'DEFAULT': {
             'BUNDLE_DIR_NAME': 'debug/',
             'STATS_FILE': os.path.join(BASE_DIR, 'webpack/stats-debug.json')
+        }
+    }
+else:
+    WEBPACK_LOADER = {
+        'DEFAULT': {
+            'BUNDLE_DIR_NAME': 'prod/',
+            'STATS_FILE': os.path.join(BASE_DIR, 'webpack/stats-prod.json')
         }
     }
