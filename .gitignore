@@ -6,3 +6,6 @@
 /temp/
 /.env
 /ansible/secrets.yml
+/node_modules/
+/assets/debug/
+/webpack/stats-debug.json
