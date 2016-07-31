@@ -1,3 +1,3 @@
 window.jQuery = require('jquery');
 
-require('./reset.scss');
+require('./app.scss');

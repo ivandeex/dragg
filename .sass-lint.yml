@@ -6,3 +6,4 @@ files:
 
 rules:
   property-sort-order: 0
+  no-color-literals: 0

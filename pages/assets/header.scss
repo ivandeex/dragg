@@ -1,0 +1,51 @@
+// Header
+
+.site-logo {
+  padding: 25px;
+  border-bottom: 2px solid $color-border;
+
+  h1 {
+    display: inline-block;
+    cursor: pointer;
+
+    font-family: 'URW Bookman L', Georgia, Serif;
+    font-size: 2.6rem;
+    font-weight: bold;
+    text-shadow: #998875 0 3px 8px;
+
+    a {
+      color: #a37b52;
+      text-decoration: none;
+
+      &:hover {
+        color: #d19b1d;
+        background: transparent;
+      }
+    }
+  }
+}
+
+// Menu
+
+.site-menu {
+  list-style: none;
+  padding: 7px 0 2px 25px;
+
+  li {
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0 2px 5px 0;
+
+    border: 1px solid $color-border;
+    border-radius: 4px;
+    background-color: $bg3;
+
+    font-size: 1rem;
+    color: $color-text;
+
+    &:hover {
+      background-color: #ffe6cd;
+    }
+  }
+}

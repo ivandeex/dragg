@@ -11,40 +11,40 @@ html
   body.site-body
     header.site-header
       .site-logo
-        h1 Hello {{debug}}
+        h1: a(href="/") Vanko
       ul.site-menu
-        li Home
-        li News
-        li Library
-        li Projects
+        - for item in 'Home News Library Projects'.split()
+          li= item
     div.site-center
       main.site-main
         ul.page-breadcrumb
           li Home
           li info
         h1.page-title education
-        article.article
-          h1.article-title State resources
-          aside.article-info Submitted by vitki on Nov 26 2009 - 9:16pm
-          aside.article-info in education oracle
-          p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        - for i in range(3)
+          article.article
+            h1.article-title: a(href="/") State resources
+            aside.article-info Submitted by vitki on Nov 26 2009 - 9:16pm
+            aside.article-info in education oracle
+            main.article-content
+              p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          article.article
+            h1.article-title: a(href="/") Центр образования № 1840
+            aside.article-info Submitted by vitki on Nov 26 2009 - 9:16pm
+            aside.article-info in education oracle
+            main.article-content
+              p Центр образования № 1840 - самое большое учебное заведение Мещанского района Центрального административного округа города Москвы. Это многопрофильное региональное учреждение, реализующее идеи непрерывного дошкольного, основного общего и профессионального образования.
+              p История Центра образования № 1840 начинается с 1936 года. Первоначально это была мужская семилетняя школа № 1 Октябрьской железной дороги Народного комиссариата путей сообщения СССР. С с 1992 года экспериментальная школа – лицей № 1140, с 1994 года преобразована в учебно-воспитательный комплекс № 1840, а с 2002 года получила статус Центра образования.
       aside.site-aside
         section.aside-section
           h1.aside-title Tags
-          p.aside-content
-            a(href="") analysis
-            a(href="") coding
-            a(href="") docs
-            a(href="") hints
-            a(href="") humor
-            a(href="") library
-            a(href="") linux
-            a(href="") software
-            a(href="") tools
-            a(href="") ubuntu
-            a(href="") web
-            a(href="") windows
-          a.aside-link(href="") more tags
-    footer.site-footer &copy; 2005-2016, vanko.me
+          .aside-block
+            - for item in 'analysis coding docs hints humor library linux software tools ubuntu web windows'.split()
+              a(href="#")= item
+              =' '
+          .aside-link: a(href="#") more tags
+    footer.site-footer
+      &copy; 2005-2016,
+      a(href="/") vanko.me
     = render_bundle('vendor', 'js')
     = render_bundle('main', 'js')
