@@ -2,10 +2,49 @@ doctype html
 html
   head
     meta(charset="utf-8")
-    title Test page
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(http-equiv="X-UA-Compatible", content="IE=Edge")
+    title News Box
     = render_bundle('manifest')
-  body
-    h1 Test page
-    p Lorem ipsum dolor sit amet
+    = render_bundle('vendor', 'css')
+    = render_bundle('main', 'css')
+  body.site-body
+    header.site-header
+      .site-logo
+        h1 Hello {{debug}}
+      ul.site-menu
+        li Home
+        li News
+        li Library
+        li Projects
+    div.site-center
+      main.site-main
+        ul.page-breadcrumb
+          li Home
+          li info
+        h1.page-title education
+        article.article
+          h1.article-title State resources
+          aside.article-info Submitted by vitki on Nov 26 2009 - 9:16pm
+          aside.article-info in education oracle
+          p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      aside.site-aside
+        section.aside-section
+          h1.aside-title Tags
+          p.aside-content
+            a(href="") analysis
+            a(href="") coding
+            a(href="") docs
+            a(href="") hints
+            a(href="") humor
+            a(href="") library
+            a(href="") linux
+            a(href="") software
+            a(href="") tools
+            a(href="") ubuntu
+            a(href="") web
+            a(href="") windows
+          a.aside-link(href="") more tags
+    footer.site-footer &copy; 2005-2016, vanko.me
     = render_bundle('vendor', 'js')
     = render_bundle('main', 'js')
