@@ -42,6 +42,32 @@ INSTALLED_APPS = [
     'news',
 ]
 
+if DEBUG:
+    # Debug Toolbar
+    import debug_toolbar
+
+    if debug_toolbar.VERSION == '1.5':
+        # Fix error "'Template' object has no attribute 'engine'"
+        # See: http://stackoverflow.com/q/38569760
+        #      https://github.com/niwinz/django-jinja/issues/151
+        #      https://github.com/jazzband/django-debug-toolbar/issues/790
+        def _patch_debug_toolbar_1_5():
+            from debug_toolbar.panels.templates import TemplatesPanel
+            orig_store_template_info = TemplatesPanel._store_template_info
+
+            def new_store_template_info(self, *args, **kwargs):
+                orig_store_template_info(self, *args, **kwargs)
+                template = self.templates[0].get('template')
+                if template and not hasattr(template, 'engine'):
+                    template.engine = template.backend
+
+            TemplatesPanel._store_template_info = new_store_template_info
+
+        _patch_debug_toolbar_1_5()
+
+    INTERNAL_IPS = os.environ.get('INTERNAL_IPS', '127.0.0.1').split(',')
+    INSTALLED_APPS += ['debug_toolbar']
+
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
