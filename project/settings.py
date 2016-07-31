@@ -1,5 +1,7 @@
 import os
 import dj_database_url
+import django_jinja.builtins
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,6 +24,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
 
 INSTALLED_APPS = [
+    # django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,8 +32,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # 3rd party
+    'django_jinja',
     'webpack_loader',
 
+    # project apps
     'nav',
     'pages',
     'news',
@@ -50,6 +56,25 @@ MIDDLEWARE_CLASSES = [
 ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
+    {
+        'BACKEND': 'django_jinja.backend.Jinja2',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            # pyjade preprocesses only .jade files (this is hardcoded),
+            # so we must match using the same extension.
+            'match_extension': '.jade',
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'extensions': django_jinja.builtins.DEFAULT_EXTENSIONS + [
+                'pyjade.ext.jinja.PyJadeExtension',
+                'webpack_loader.contrib.jinja2ext.WebpackExtension',
+            ],
+        }
+    },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
