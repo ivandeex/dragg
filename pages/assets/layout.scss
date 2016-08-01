@@ -1,13 +1,34 @@
 // Layout
 
+@mixin flex($factor: 0, $base: auto) {
+  // "flex: 1" expands to "flex: 1 1 auto" according to standard, i.e. it
+  // sets flex-grow=1 and flex-shrink=1 in firefox/chrome, but in ie10/11
+  // the defaults are wrong: "flex: 1 0 auto", i.e. shrink-ability is off.
+  // as a workaround, we explicitly set ability to shrink to 1.
+  flex: $factor $factor $base;
+}
+
 html {
-  height: 100%;
+  @if $ie-fix {
+    // IE needs a concrete number, "height: 100%" is not enough for IE.
+    // Even given viewport height, IE won't honor it. Flex display is a workaround.
+    // See: http://stackoverflow.com/questions/31835164/how-do-i-fix-a-flexbox-sticky-footer-in-ie11
+    min-height: 100vh;
+    display: flex;
+  } @else {
+    height: 100%;
+  }
   font-size: $scale;
   font-family: $font-main;
 }
 
 body {
-  height: 100%;
+  @if $ie-fix {
+    min-height: 100vh;
+    flex: 1;
+  } @else {
+    height: 100%;
+  }
   display: flex;
   flex-direction: column;
   background-color: $bg1;
@@ -19,28 +40,28 @@ body {
 }
 
 .site-header {
-  flex: 0 0 auto;
+  @include flex(0);
   margin: $frame-gap;
   background-color: $bg2;
   @include frame-border;
 }
 
 .site-footer {
-  flex: 0 0 auto;
+  @include flex(0);
   margin: 0 $aside-width 0 0;
-  padding: $frame-gap*2 0;
+  padding: ($frame-gap * 2) 0;
   text-align: center;
 }
 
 .site-center {
-  flex: 1;
+  @include flex(1);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 }
 
 .site-main {
-  flex: 1;
+  @include flex(1);
   margin: 0 $frame-gap;
   padding: 10px 0;
   background-color: #fff;
@@ -48,12 +69,15 @@ body {
 }
 
 .site-aside {
-  flex: 0 0 $aside-width;
+  @include flex(0, $aside-width);
   margin-right: $frame-gap;
   background-color: $bg2;
   @include frame-border;
 }
 
+@mixin window-wide {
+  width: calc(100% - #{ ($frame-gap + $frame-width) * 2 });
+}
 
 @media (max-width: 800px) {
   .site-center {
@@ -62,18 +86,21 @@ body {
   }
 
   .site-main {
-    flex: 0 0 auto;
+    @include flex(0);
+    @if $ie-fix {
+      @include window-wide;
+    }
   }
 
   .site-aside {
-    flex: 0 0 auto;
-    width: calc(100% - #{ ($frame-gap + $frame-width) * 2 });
+    @include flex(0);
+    @include window-wide;
     margin-left: $frame-gap;
     margin-top: $frame-gap;
   }
 
   .site-footer {
-      margin: 0;
+    margin: 0;
   }
 }
 
