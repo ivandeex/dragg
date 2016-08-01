@@ -89,6 +89,10 @@ TEMPLATES = [
             # pyjade preprocesses only .jade files (this is hardcoded),
             # so we must match using the same extension.
             'match_extension': '.jade',
+            'globals': {
+                'site_menu': 'nav.urls.site_menu',
+                'tagadelic_terms': 'nav.urls.tagadelic_terms',
+            },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',

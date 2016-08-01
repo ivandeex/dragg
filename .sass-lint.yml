@@ -1,6 +1,6 @@
 files:
   include:
-    - 'pages/**/*.scss'
+    - '*/assets/*.scss'
   ignore:
     - '**/reset.scss'
 

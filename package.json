@@ -5,8 +5,9 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "clean": "rimraf assets/debug media temp",
-    "lint": "eslint pages/assets && sass-lint -v -q",
+    "clean": "rimraf assets/debug media temp static",
+    "prelint": "eslint */assets",
+    "lint": "sass-lint -v -q",
     "predebug": "rimraf assets/debug",
     "debug": "webpack --config webpack/debug.js",
     "preprod": "rimraf assets/prod",

@@ -1,0 +1,20 @@
+- extends "base.jade"
+- block main
+//-ul.page-breadcrumb
+  li Home
+  li info
+//-h1.page-title education
+- for article in articles
+  article.article
+    h1.article-title: a(href="/{{ article.url() }}")= article.title
+    aside.article-info Submitted on {{ article.created.strftime('%b %-d %Y - %I:%M%p') }}
+    aside.article-info
+      = 'in '
+      - for term in article.terms.distinct('name').order_by('name')
+        a(href="/tag/{{term.name}}")= term.name
+        - if not loop.last
+          = ', '
+    main.article-content
+      = article.rev.teaser|safe
+    a.read-more(href="/{{ article.url() }}") Read more ⇒
+- endblock

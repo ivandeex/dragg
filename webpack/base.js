@@ -7,7 +7,9 @@ var webpack = require('webpack'),
     base_dir = path.dirname(__dirname) + '/';
 
 module.exports = {
-    entry: [ path.join(base_dir, 'pages/assets/app.js') ],
+    entry: [
+      path.join(base_dir, 'project/assets/app.js')
+    ],
 
     module: {
       loaders: [
@@ -28,6 +30,12 @@ module.exports = {
           test: /\.(png|jpg|svg|woff|woff2|eot|ttf)$/,
           loader: 'url?limit=10000&name=[name].[ext]'
         }
+      ]
+    },
+
+    sassLoader: {
+      includePaths: [
+        base_dir
       ]
     },
 

@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(http-equiv="X-UA-Compatible", content="IE=Edge")
+    - block title
+    title News Box
+    - endblock
+    = render_bundle('manifest')
+    = render_bundle('vendor', 'css')
+    = render_bundle('main', 'css')
+  body.site-body
+    header.site-header
+      .site-logo
+        h1: a(href="/") Vanko
+      ul.site-menu
+        for word, link in site_menu
+          li: a(href="{{link}}")= word
+    div.site-center
+      main.site-main
+        - block main
+        - endblock
+      aside.site-aside
+        - block aside
+        section.aside-section
+          h1.aside-title Tags
+          .aside-block
+            for term, weight in tagadelic_terms
+              a(href="/tag/{{ term }}")= term
+              =' '
+          .aside-link: a(href="/tagadelic") more tags
+        - endblock
+    footer.site-footer
+      &copy; 2005-2016,
+      a(href="/") vanko.me
+    = render_bundle('vendor', 'js')
+    = render_bundle('main', 'js')

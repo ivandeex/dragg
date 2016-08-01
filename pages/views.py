@@ -10,4 +10,4 @@ def frontpage(request):
     context = {
         'articles': articles.order_by('-created')[:page_size]
     }
-    return TemplateResponse(request, 'index.jade', context)
+    return TemplateResponse(request, 'frontpage.jade', context)
