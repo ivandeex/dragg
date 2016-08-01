@@ -4,7 +4,7 @@
   li Home
   li info
 //-h1.page-title education
-- for article in articles
+for article in page.object_list
   article.article
     h1.article-title: a(href="/{{ article.url() }}")= article.title
     aside.article-info Submitted on {{ article.created.strftime('%b %-d %Y - %I:%M%p') }}
@@ -16,5 +16,6 @@
           = ', '
     main.article-content
       = article.rev.teaser|safe
-    a.read-more(href="/{{ article.url() }}") Read more ⇒
+    a.read-more(href="/{{ article.url() }}") Read more &rArr;
+include pager.jade
 - endblock

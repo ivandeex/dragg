@@ -58,6 +58,10 @@ body {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+
+  &.single-column > .site-aside {
+    display: none;
+  }
 }
 
 .site-main {

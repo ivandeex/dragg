@@ -1,0 +1,17 @@
+if page.has_other_pages()
+  ul.pager
+    if page.has_previous()
+      li: a(href=page.first_url()) &laquo; first
+      li: a(href=page.prev_url()) &lsaquo; previous
+    if page.pager_has_previous()
+      li: &hellip;
+    for _url, _text, _current in page.pager_items()
+      if _current
+        li.current= _text
+      else
+        li: a(href=_url)= _text
+    if page.pager_has_next()
+      li &hellip;
+    if page.has_next()
+      li: a(href=page.next_url()) next &rsaquo;
+      li: a(href=page.last_url()) last &raquo;

@@ -70,3 +70,23 @@
   color: #808080;
   background-color: $bg3;
 }
+
+.pager {
+  margin: 16px 0 6px;
+  list-style: none;
+  text-align: center;
+  font-size: 1.1rem;
+
+  li {
+    display: inline-block;
+    margin: 4px 2px;
+
+    a {
+      padding: 5px;
+    }
+  }
+
+  .current {
+    font-weight: bold;
+  }
+}

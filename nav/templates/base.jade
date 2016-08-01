@@ -17,7 +17,8 @@ html
       ul.site-menu
         for word, link in site_menu
           li: a(href="{{link}}")= word
-    div.site-center
+    - var classes = 'single-column' if singlecolumn else ''
+    div.site-center(class=classes)
       main.site-main
         - block main
         - endblock
@@ -28,7 +29,7 @@ html
           .aside-block
             for term, weight in tagadelic_terms
               a(href="/tag/{{ term }}")= term
-              =' '
+              &thinsp;
           .aside-link: a(href="/tagadelic") more tags
         - endblock
     footer.site-footer
