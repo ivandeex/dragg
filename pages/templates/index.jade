@@ -13,36 +13,37 @@ html
       .site-logo
         h1: a(href="/") Vanko
       ul.site-menu
-        - for item in 'Home News Library Projects'.split()
-          li= item
+        - for word, link in [('Home', '/'), ('News', '/news'), ('Library', '/tag/library'), ('Projects', '/tag/projects')]
+          li: a(href="{{link}}")= word
     div.site-center
       main.site-main
-        ul.page-breadcrumb
+        //-ul.page-breadcrumb
           li Home
           li info
-        h1.page-title education
-        - for i in range(1)
+        //-h1.page-title education
+        - for article in articles
           article.article
-            h1.article-title: a(href="/") State resources
-            aside.article-info Submitted by vitki on Nov 26 2009 - 9:16pm
-            aside.article-info in education oracle
+            h1.article-title: a(href="/{{ article.url() }}")= article.title
+            aside.article-info.
+              Submitted on
+              {{ article.created.strftime('%b %-d %Y - %I:%M') }}{{ article.created.strftime('%p')|lower }}
+            aside.article-info
+              = 'in '
+              - for term in article.terms.distinct('name').order_by('name')
+                a(href="/tag/{{term.name}}")= term.name
+                - if not loop.last
+                  = ', '
             main.article-content
-              p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          article.article
-            h1.article-title: a(href="/") Центр образования № 1840
-            aside.article-info Submitted by vitki on Nov 26 2009 - 9:16pm
-            aside.article-info in education oracle
-            main.article-content
-              p Центр образования № 1840 - самое большое учебное заведение Мещанского района Центрального административного округа города Москвы. Это многопрофильное региональное учреждение, реализующее идеи непрерывного дошкольного, основного общего и профессионального образования.
-              p История Центра образования № 1840 начинается с 1936 года. Первоначально это была мужская семилетняя школа № 1 Октябрьской железной дороги Народного комиссариата путей сообщения СССР. С с 1992 года экспериментальная школа – лицей № 1140, с 1994 года преобразована в учебно-воспитательный комплекс № 1840, а с 2002 года получила статус Центра образования.
+              = article.rev.teaser|safe
+            a.read-more(href="/{{ article.url() }}") Read more ⇒
       aside.site-aside
         section.aside-section
           h1.aside-title Tags
           .aside-block
-            - for item in 'analysis coding docs hints humor library linux software tools ubuntu web windows'.split()
-              a(href="#")= item
+            - for term in 'analysis coding docs hints humor library linux software tools ubuntu web windows'.split()
+              a(href="/tag/{{ term }}")= term
               =' '
-          .aside-link: a(href="#") more tags
+          .aside-link: a(href="/tagadelic") more tags
     footer.site-footer
       &copy; 2005-2016,
       a(href="/") vanko.me

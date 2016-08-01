@@ -29,7 +29,7 @@
 
   .article-content {
     font-family: $font-article;
-    margin: 0 8px;
+    margin: 0 $node-hor-pad;
     font-size: 1.3rem;
     line-height: 1.4em;
 
@@ -38,11 +38,18 @@
       margin-bottom: 15px;
     }
   }
+
+  .read-more {
+    margin-left: $node-hor-pad;
+    display: inline-block;
+    font-size: 1.03rem;
+    font-weight: bold;
+  }
 }
 
 .article-title {
   margin: 0 0 $frame-gap 1px;
-  padding: $frame-gap 8px;
+  padding: $frame-gap $node-hor-pad;
   background-color: #f8e3ce;
   font-size: 1.3rem;
   font-weight: bold;
@@ -51,7 +58,7 @@
 
 .article-info {
   display: block;
-  margin: -$frame-gap 12px $frame-gap 16px;
+  margin: -$frame-gap ($node-hor-pad * 2) $frame-gap;
 
   padding: 0 5px 5px;  // ~== 0 5px 5px 5px
 

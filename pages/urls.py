@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from django.template.response import TemplateResponse
+from pages.views import frontpage
 
 
 urlpatterns = [
-    url(r'^$', lambda request: TemplateResponse(request, 'index.jade')),
+    url(r'^$', frontpage),
 ]

@@ -82,9 +82,11 @@ class Node(Model):
     def __unicode__(self):
         return u'{} "{}"'.format(self.nid, self.title)
 
-    def story_url(self):
+    def story_url(self, default='-'):
         if self.type_id == 'story':
-            return self.rev.story_link.url
+            return self.rev.story_link.url or default
+        return default
+    story_url.short_description = _('Story URL')
 
     def url(self):
         from nav.models import UrlAlias
@@ -93,6 +95,10 @@ class Node(Model):
         alias = UrlAlias.objects.filter(src=raw_url).aggregate(Min('dst'))['dst__min']
         return lang_url + (alias or raw_url)
     url.short_description = _('Node URL')
+
+    def term_line(self, sep=', '):
+        return sep.join(sorted(set(term.name for term in self.terms.all())))
+    term_line.short_description = _('Node terms')
 
 
 class NodeRev(Model):

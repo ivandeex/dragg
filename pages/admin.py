@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _
 from lib.admin import ReadonlyModelAdmin
 from pages import models
 
@@ -24,14 +23,6 @@ class NodeAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
               'term_line', 'story_url', 'url', 'promote', 'sticky')
     readonly_fields = fields
     inlines = (NodeRevInline,)
-
-    def term_line(self, obj):
-        return ', '.join(sorted(set(t.name for t in obj.terms.all())))
-    term_line.short_description = _('Node terms')
-
-    def story_url(self, obj):
-        return obj.story_url() or '-'
-    story_url.short_description = _('Story URL')
 
 
 class FilterAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
