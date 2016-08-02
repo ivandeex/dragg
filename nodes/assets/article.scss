@@ -26,25 +26,25 @@
 .article {
   margin-top: 20px;
   border-top: 2px solid $color-border;
+}
 
-  .article-content {
-    font-family: $font-article;
-    margin: 0 $node-hor-pad;
-    font-size: 1.3rem;
-    line-height: 1.4em;
+.article-content {
+  font-family: $font-article;
+  margin: 0 $node-hor-pad;
+  font-size: 1.3rem;
+  line-height: 1.4em;
 
-    p {
-      margin-top: 15px;
-      margin-bottom: 15px;
-    }
+  p {
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
+}
 
-  .read-more {
-    margin-left: $node-hor-pad;
-    display: inline-block;
-    font-size: 1.03rem;
-    font-weight: bold;
-  }
+.read-more {
+  margin-left: $node-hor-pad;
+  display: inline-block;
+  font-size: 1.03rem;
+  font-weight: bold;
 }
 
 .article-title {
@@ -54,6 +54,13 @@
   font-size: 1.3rem;
   font-weight: bold;
   color: $color-text;
+}
+
+h1.title {
+  margin: 12px $frame-gap;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000;
 }
 
 .article-info {
@@ -72,7 +79,7 @@
 }
 
 .pager {
-  margin: 16px 0 6px;
+  margin: 16px 0 $frame-gap;
   list-style: none;
   text-align: center;
   font-size: 1.1rem;
@@ -88,5 +95,17 @@
 
   .current {
     font-weight: bold;
+  }
+}
+
+.article-fields {
+  margin: 18px ($frame-gap * 2);
+  list-style: none;
+  font-size: 1.1rem;
+  color: #7b2000;
+
+  li {
+    display: inline-block;
+    margin: 0 6px 4px 0;
   }
 }

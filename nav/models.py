@@ -12,7 +12,7 @@ class Term(Model):
     weight = SmallIntegerField()
     language = CharField(max_length=12)
     trid = IntegerField()
-    nodes = ManyToManyField('pages.Node', related_name='terms', through='TermNode')
+    nodes = ManyToManyField('nodes.Node', related_name='terms', through='TermNode')
 
     class Meta:
         db_table = 'term_data'
@@ -21,11 +21,14 @@ class Term(Model):
     def __unicode__(self):
         return u'{} "{}"'.format(self.tid, self.name)
 
+    def get_absolute_url(self):
+        return '/{}tag/{}'.format(self.language + '/' if self.language else '', self.name)
+
 
 class TermNode(Model):
     term = ForeignKey(Term, CASCADE, db_column='tid')
     vid = PositiveIntegerField(primary_key=True)  # FAKE! Prevents attempts to use 'id'!
-    node = ForeignKey('pages.Node', CASCADE, db_column='nid')
+    node = ForeignKey('nodes.Node', CASCADE, db_column='nid')
 
     class Meta:
         db_table = 'term_node'

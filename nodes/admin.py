@@ -1,6 +1,7 @@
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 from lib.admin import ReadonlyModelAdmin
-from pages import models
+from nodes import models
 
 
 class NodeRevInline(ReadonlyModelAdmin, admin.StackedInline):
@@ -20,9 +21,14 @@ class NodeAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
     ordering = ('-created',)
     search_fields = ('title', 'rev__body', 'rev__teaser')
     fields = ('nid', 'type_id', 'language', 'title', 'status', 'created', 'changed',
-              'term_line', 'story_url', 'url', 'promote', 'sticky')
+              'term_line', 'story_url', 'promote', 'sticky')
     readonly_fields = fields
     inlines = (NodeRevInline,)
+
+    def term_line(self, sep=', '):
+        return sep.join(self.terms.distinct('name').order_by('name')
+                        .values_list('name', flat=True))
+    term_line.short_description = _('Node terms')
 
 
 class FilterAdmin(ReadonlyModelAdmin, admin.ModelAdmin):

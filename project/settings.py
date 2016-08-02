@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 
     # project apps
     'nav',
-    'pages',
+    'nodes',
     'news',
 ]
 
@@ -57,9 +57,10 @@ if DEBUG:
 
             def new_store_template_info(self, *args, **kwargs):
                 orig_store_template_info(self, *args, **kwargs)
-                template = self.templates[0].get('template')
-                if template and not hasattr(template, 'engine'):
-                    template.engine = template.backend
+                if self.templates:
+                    template = self.templates[0].get('template')
+                    if template and not hasattr(template, 'engine'):
+                        template.engine = template.backend
 
             TemplatesPanel._store_template_info = new_store_template_info
 
@@ -140,6 +141,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+SITES_ROOT = os.environ.get('SITES_ROOT', '/var/www/sites')
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

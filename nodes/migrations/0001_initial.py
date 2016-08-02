@@ -107,7 +107,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='NodeAccess',
             fields=[
-                ('node', models.OneToOneField(db_column=b'nid', on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='access', serialize=False, to='pages.Node')),
+                ('node', models.OneToOneField(db_column=b'nid', on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='access', serialize=False, to='nodes.Node')),
                 ('gid', models.PositiveIntegerField()),
                 ('realm', models.CharField(max_length=255)),
                 ('grant_view', lib.models.BooleanSmallIntField()),
@@ -122,7 +122,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='StoryLink',
             fields=[
-                ('rev', models.OneToOneField(db_column=b'vid', on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='story_link', serialize=False, to='pages.NodeRev')),
+                ('rev', models.OneToOneField(db_column=b'vid', on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='story_link', serialize=False, to='nodes.NodeRev')),
                 ('url', models.URLField(blank=True, db_column=b'field_story_url_url', max_length=2048, null=True)),
                 ('title', models.CharField(blank=True, db_column=b'field_story_url_title', max_length=2048, null=True)),
                 ('attrs', models.TextField(blank=True, db_column=b'field_story_url_attributes', null=True)),

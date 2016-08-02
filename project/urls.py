@@ -16,17 +16,18 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.static import serve
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('pages.urls')),
+    url(r'^sites/(?P<path>.*)$', serve, {'document_root': settings.SITES_ROOT}),
+    url(r'^', include('nodes.urls')),
 ]
 
 if settings.DEBUG:
-    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
     urlpatterns += staticfiles_urlpatterns()
 else:
-    from django.views.static import serve
     pattern = r'^%s(?P<path>.*)$' % settings.STATIC_URL.lstrip('/')
     urlpatterns += [url(pattern, serve, {'document_root': settings.STATIC_ROOT})]

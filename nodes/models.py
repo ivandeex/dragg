@@ -6,6 +6,7 @@ from django.db.models import (Model, Min,
 from unixtimestampfield.fields import UnixTimeStampField
 from lib.models import BooleanIntField, BooleanSmallIntField
 from django.utils.translation import ugettext_lazy as _
+from urlparse import urljoin
 
 
 class FilterFormat(Model):
@@ -88,17 +89,17 @@ class Node(Model):
         return default
     story_url.short_description = _('Story URL')
 
-    def url(self):
-        from nav.models import UrlAlias
-        lang_url = self.language + '/' if self.language and self.language != 'en' else ''
-        raw_url = 'node/%d' % self.nid
-        alias = UrlAlias.objects.filter(src=raw_url).aggregate(Min('dst'))['dst__min']
-        return lang_url + (alias or raw_url)
-    url.short_description = _('Node URL')
+    def created_str(self):
+        return (self.created.strftime('%b %-d %Y - %I:%M')
+                + self.created.strftime('%p').lower())
 
-    def term_line(self, sep=', '):
-        return sep.join(sorted(set(term.name for term in self.terms.all())))
-    term_line.short_description = _('Node terms')
+    def get_absolute_url(self):
+        from nav.models import UrlAlias
+
+        lang_prefix = self.language + '/' if self.language else ''
+        node_url = 'node/%d' % self.nid
+        url_alias = UrlAlias.objects.filter(src=node_url).aggregate(Min('dst'))['dst__min']
+        return '/' + urljoin(lang_prefix, url_alias or node_url)
 
 
 class NodeRev(Model):
