@@ -22,7 +22,7 @@ class Term(Model):
         return u'{} "{}"'.format(self.tid, self.name)
 
     def get_absolute_url(self):
-        return '/{}tag/{}'.format(self.language + '/' if self.language else '', self.name)
+        return u'{}/tag/{}'.format('/' + self.language if self.language else '', self.name)
 
 
 class TermNode(Model):

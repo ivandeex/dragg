@@ -3,15 +3,15 @@
 //-ul.page-breadcrumb
   li Home
   li info
-//-h1.page-title education
+h1.page-title= page_term.name
 for node in page.object_list
   article.article
     h1.article-title: a(href=node.get_absolute_url())= node.title
     aside.article-info Submitted on {{ node.created_str() }}
     aside.article-info
       = 'in '
-      - for term in node.terms.distinct('name').order_by('name')
-        a(href=term.get_absolute_url())= term.name
+      - for node_term in node.terms.distinct('name').order_by('name')
+        a(href=node_term.get_absolute_url())= node_term.name
         - if not loop.last
           = ', '
     main.article-content
