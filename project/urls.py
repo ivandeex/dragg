@@ -4,12 +4,17 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.views.static import serve
 from nav import views as nav_views
+from news import views as news_views
 from nodes import views as node_views
 
 common_patterns = [
     url(r'^sites/(?P<path>.*)$', serve, {'document_root': settings.SITES_ROOT}),
     url(r'^(?P<path>(book|page|story)/.+)$', node_views.node_path_view),
     url(r'^node/(?P<pk>\d+)(?:/.*)?$', node_views.node_pk_view),
+    url(r'^news$', news_views.category_view, dict(cid='news')),
+    url(r'^aggregator$', news_views.category_view, dict(cid='all')),
+    url(r'^aggregator/categories/(?P<cid>\d+)$', news_views.category_view),
+    url(r'^aggregator/categories$', news_views.category_list_view),
     url(r'^taxonomy/term/(?P<pk>\d+)$', nav_views.term_pk_view),
     url(r'^tag/(?P<name>[^/]+)$', nav_views.term_name_view),
     url(r'^$', nav_views.frontpage),

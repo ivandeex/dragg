@@ -30,9 +30,9 @@
 
 .article-content {
   font-family: $font-article;
+  font-size: $font-size-article;
+  line-height: $font-height-article;
   margin: 0 $node-hor-pad;
-  font-size: 1.3rem;
-  line-height: 1.4em;
 
   p {
     margin-top: 15px;
@@ -49,14 +49,14 @@
   color: $color-text;
 }
 
-h1.title {
+.node-title {
   margin: 12px $frame-gap;
   font-size: 2rem;
   font-weight: bold;
   color: #000;
 }
 
-h2.title {
+.node-subtitle {
   margin: 12px $frame-gap;
   font-size: 1.7rem;
   font-weight: bold;
@@ -98,7 +98,7 @@ h2.title {
   }
 }
 
-ul.article-links {
+.article-links {
   margin: 14px ($frame-gap * 2);
   list-style: none;
   font-size: 1.1rem;
@@ -117,11 +117,12 @@ ul.article-links {
   font-weight: bold;
 }
 
-ul.related-links {
+.related-links {
   margin: 12px 24px;
   font-size: 1.15rem;
   line-height: 1.7rem;
   list-style: none;
+
   li {
     background: url($red-arrow-bullet) no-repeat scroll 0 8px;
     padding-left: 1.5rem;

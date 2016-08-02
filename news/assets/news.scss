@@ -1,0 +1,36 @@
+.news-item {
+  margin: 16px $node-hor-pad;
+}
+
+.news-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 6px 0;
+}
+
+.news-meta {
+  margin: 8px;
+  font-size: 1em;
+}
+
+$news-body-gaps: ($frame-gap + $frame-width + $node-hor-pad) * 2 + 20px;
+
+.news-body {
+  margin: 10px 0 8px;
+  font-family: $font-article;
+  font-size: $font-size-article;
+  line-height: $font-height-article;
+  overflow: hidden;
+  max-width: calc(100vw - #{ $news-body-gaps });
+
+  img {
+    margin: 6px;
+    max-width: calc(100vw - #{ $news-body-gaps + 12px });
+    max-height: 50vh;
+  }
+}
+
+.news-list {
+  margin-left: 20px;
+  list-style-type: none;
+}

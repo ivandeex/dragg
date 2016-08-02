@@ -1,8 +1,7 @@
-- extends "base.jade"
+extends 'base.jade'
+
 - block main
-//-ul.page-breadcrumb
-  li Home
-  li info
+include breadcrumb.jade
 h1.page-title= page_term.name
 
 for node in page.object_list
@@ -12,9 +11,9 @@ for node in page.object_list
 
     aside.article-info
       = 'in '
-      - for node_term in node.terms.distinct('name').order_by('name')
+      for node_term in node.terms.distinct('name').order_by('name')
         a(href=node_term.get_absolute_url())= node_term.name
-        - if not loop.last
+        if not loop.last
           = ', '
 
     main.article-content

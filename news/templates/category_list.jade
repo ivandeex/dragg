@@ -1,0 +1,22 @@
+extends 'base.jade'
+
+- block main
+include breadcrumb.jade
+h1.node-title Categories
+
+for cat in categories
+  .news-item
+    h1.news-title= cat.title
+
+    ul.news-body.news-list
+      for item in cat.get_latest_items()
+        li
+          a(href=item.link)= item.title
+          &ensp;&ndash;
+          =item.timestamp
+          ,&thinsp;
+          a(href=item.feed.link)= item.feed.title
+
+    .news-meta
+      a(href=cat.get_absolute_url()) More
+- endblock

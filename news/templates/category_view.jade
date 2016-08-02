@@ -1,0 +1,26 @@
+extends 'base.jade'
+
+- block main
+include breadcrumb.jade
+h1.node-title= title
+
+for item in page
+  .news-item
+    h1.news-title
+      a(href=item.link)= item.title
+
+    .news-meta
+      a(href=item.feed.get_absolute_url())= item.feed.title
+      &ensp;&ndash;&thinsp;
+      =item.timestamp
+
+    .news-body= item.description|safe
+
+    .news-meta
+      = 'Categories: '
+      for c_title, c_url in item.get_categories()
+        a(href=c_url)= c_title
+
+
+include pager.jade
+- endblock

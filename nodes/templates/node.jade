@@ -1,24 +1,22 @@
-- extends "base.jade"
+extends 'base.jade'
+
 - block main
-//-ul.page-breadcrumb
-  li Home
-  li info
-//-h1.page-title education
-h1.title= node.title
+include breadcrumb.jade
+h1.node-title= node.title
 
 aside.article-info Submitted on {{ node.created_str() }}
 aside.article-info
   = 'in '
-  - for term in node.terms.distinct('name').order_by('name')
+  for term in node.terms.distinct('name').order_by('name')
     a(href=term.get_absolute_url())= term.name
-    - if not loop.last
+    if not loop.last
       = ', '
 
 main.article-content
   = node.rev.body|safe
 
 if node.has_related_links()
-  h2.title Related links
+  h2.node-subtitle Related links
   ul.related-links
     for title, url in node.get_related_links()
       li: a(href=url) {{title}}
