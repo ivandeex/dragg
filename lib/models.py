@@ -26,3 +26,11 @@ class BooleanSmallIntField(BooleanIntField):
 
     def get_internal_type(self):
         return 'PositiveSmallIntegerField'
+
+
+class FixedCharField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        super(FixedCharField, self).__init__(*args, **kwargs)
+
+    def db_type(self):
+        return 'char(%s)' % self.max_length

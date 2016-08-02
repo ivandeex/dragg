@@ -5,6 +5,7 @@
   li info
 //-h1.page-title education
 h1.title= node.title
+
 aside.article-info Submitted on {{ node.created_str() }}
 aside.article-info
   = 'in '
@@ -12,9 +13,13 @@ aside.article-info
     a(href=term.get_absolute_url())= term.name
     - if not loop.last
       = ', '
+
 main.article-content
   = node.rev.body|safe
-ul.article-fields
-  if node.story_url(null):
-    li: a(href=node.story_url()) &crarr; Original story
+
+if node.has_related_links()
+  h2.title Related links
+  ul.related-links
+    for title, url in node.get_related_links()
+      li: a(href=url) {{title}}
 - endblock

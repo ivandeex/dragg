@@ -2,9 +2,10 @@ from django.db.models import (Model, Min,
                               CharField, TextField, URLField,
                               AutoField, IntegerField, PositiveIntegerField,
                               SmallIntegerField, PositiveSmallIntegerField,
-                              ForeignKey, OneToOneField, CASCADE, SET_NULL)
+                              ForeignKey, OneToOneField, ManyToManyField, CASCADE, SET_NULL)
 from unixtimestampfield.fields import UnixTimeStampField
-from lib.models import BooleanIntField, BooleanSmallIntField
+from lib.models import BooleanIntField, BooleanSmallIntField, FixedCharField
+from nav import models as nav_models
 from django.utils.translation import ugettext_lazy as _
 from urlparse import urljoin
 
@@ -90,16 +91,25 @@ class Node(Model):
     story_url.short_description = _('Story URL')
 
     def created_str(self):
+        # The minus-notation (%-d) removes leading zeros
         return (self.created.strftime('%b %-d %Y - %I:%M')
                 + self.created.strftime('%p').lower())
 
-    def get_absolute_url(self):
-        from nav.models import UrlAlias
+    def has_related_links(self):
+        return self.nodelinks.filter(module='links_related').exists()
 
+    def get_related_links(self, limit=None):
+        nodelinks = self.nodelinks.filter(module='links_related').order_by('link__title')
+        if limit:
+            nodelinks = nodelinks[:limit]
+        for nl in nodelinks:
+            yield (nl.get_title(), nl.link.url)
+
+    def get_absolute_url(self):
         lang_prefix = self.language + '/' if self.language else ''
-        node_url = 'node/%d' % self.nid
-        url_alias = UrlAlias.objects.filter(src=node_url).aggregate(Min('dst'))['dst__min']
-        return '/' + urljoin(lang_prefix, url_alias or node_url)
+        url = 'node/%d' % self.nid
+        alias = nav_models.UrlAlias.objects.filter(src=url).aggregate(Min('dst'))['dst__min']
+        return '/' + urljoin(lang_prefix, alias or url)
 
 
 class NodeRev(Model):
@@ -146,7 +156,8 @@ class StoryLink(Model):
     rev = OneToOneField(NodeRev, CASCADE, db_column='vid', related_name='story_link',
                         primary_key=True)
     node = ForeignKey(Node, CASCADE, db_column='nid', related_name='+')
-    url = URLField(max_length=2048, db_column='field_story_url_url', null=True, blank=True)
+    url = URLField(max_length=2048, db_column='field_story_url_url',
+                   null=True, blank=True)
     title = CharField(max_length=2048, db_column='field_story_url_title',
                       null=True, blank=True)
     attrs = TextField(db_column='field_story_url_attributes',
@@ -154,4 +165,41 @@ class StoryLink(Model):
 
     class Meta:
         db_table = 'content_type_story'
+        managed = False
+
+
+class Link(Model):
+    lid = AutoField(primary_key=True)
+    url_md5 = FixedCharField(max_length=32)
+    url = TextField()
+    title = CharField(max_length=255, db_column='link_title')
+    last_click_time = UnixTimeStampField()
+    nodes = ManyToManyField(Node, related_name='links', through='NodeLink')
+
+    def __unicode__(self):
+        return u'%d "%s"' % (self.lid, self.title)
+
+    class Meta:
+        db_table = 'links'
+        managed = False
+
+
+class NodeLink(Model):
+    link = ForeignKey(Link, CASCADE, db_column='lid', related_name='nodelinks',
+                      primary_key=True)  # FAKE!
+    node = ForeignKey(Node, CASCADE, db_column='nid', related_name='nodelinks')
+    title = CharField(max_length=255, db_column='link_title')
+    weight = SmallIntegerField()
+    clicks = IntegerField()
+    module = CharField(max_length=60)
+
+    def __unicode__(self):
+        return u'link={} node={} title="{}"'.format(
+            self.link_id, self.node_id, self.get_title())
+
+    def get_title(self):
+        return self.title or self.link.title
+
+    class Meta:
+        db_table = 'links_node'
         managed = False

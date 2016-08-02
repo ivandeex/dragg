@@ -4,18 +4,26 @@
   li Home
   li info
 h1.page-title= page_term.name
+
 for node in page.object_list
   article.article
     h1.article-title: a(href=node.get_absolute_url())= node.title
     aside.article-info Submitted on {{ node.created_str() }}
+
     aside.article-info
       = 'in '
       - for node_term in node.terms.distinct('name').order_by('name')
         a(href=node_term.get_absolute_url())= node_term.name
         - if not loop.last
           = ', '
+
     main.article-content
       = node.rev.teaser|safe
-    a.read-more(href=node.get_absolute_url()) Read more &rArr;
+
+    ul.article-links
+      li: a.read-more(href=node.get_absolute_url()) Read more &rArr;
+      for title, url in node.get_related_links(limit=2)
+        li: a(href=url) &dagger; Visit {{title}}
+
 include pager.jade
 - endblock
