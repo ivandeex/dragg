@@ -3,6 +3,8 @@ extends 'base.jade'
 - block main
 include breadcrumb.jade
 h1.node-title= title
+- block newsmeta
+- endblock
 
 for item in page
   .news-item

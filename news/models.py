@@ -27,7 +27,7 @@ class Category(Model):
 
     def get_latest_items(self, limit=None):
         limit = limit or settings.PAGINATOR_SIZE
-        return Item.objects.filter(feed__categories=self).order_by('-timestamp')[:limit]
+        return Item.objects.filter(feed__categories=self)[:limit]
 
 
 class Feed(Model):
@@ -86,6 +86,7 @@ class Item(Model):
     class Meta:
         db_table = 'aggregator_item'
         managed = False
+        ordering = ('-timestamp',)
 
     def __unicode__(self):
         return u'%d "%s"' % (self.iid, self.title)

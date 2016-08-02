@@ -19,7 +19,6 @@ class ItemAdmin(ReadonlyModelAdmin, admin.ModelAdmin):
     list_filter = ('feed__title', 'feed__categories__title')
     fields = list_display + ('category_list', 'description')
     readonly_fields = fields
-    ordering = ('-timestamp',)
 
     def feed_title(self, obj):
         return obj.feed.title

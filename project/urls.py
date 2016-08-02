@@ -15,6 +15,7 @@ common_patterns = [
     url(r'^aggregator$', news_views.category_view, dict(cid='all')),
     url(r'^aggregator/categories/(?P<cid>\d+)$', news_views.category_view),
     url(r'^aggregator/categories$', news_views.category_list_view),
+    url(r'^aggregator/sources/(?P<fid>\d+)$', news_views.feed_view),
     url(r'^taxonomy/term/(?P<pk>\d+)$', nav_views.term_pk_view),
     url(r'^tag/(?P<name>[^/]+)$', nav_views.term_name_view),
     url(r'^$', nav_views.frontpage),

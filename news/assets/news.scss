@@ -34,3 +34,16 @@ $news-body-gaps: ($frame-gap + $frame-width + $node-hor-pad) * 2 + 20px;
   margin-left: 20px;
   list-style-type: none;
 }
+
+.feed-meta {
+  margin-left: $node-hor-pad;
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+  }
+
+  i {
+    font-style: italic;
+  }
+}

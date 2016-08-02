@@ -1,0 +1,11 @@
+extends 'category_view.jade'
+
+- block newsmeta
+.feed-meta
+  p
+    i URL:&ensp;
+    a(href=feed.link)= feed.link
+  p
+    i Updated:&ensp;
+    span= feed.modified | timeago(24)
+- endblock
