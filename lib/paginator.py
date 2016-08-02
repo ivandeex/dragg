@@ -1,19 +1,17 @@
 import urlparse
+from django.conf import settings
 from django.core.paginator import Page, Paginator
-
-PAGE_PARAM = 'page'
-PAGE_SIZE = 10
-NUM_ITEMS = 9
 
 
 class DrupalPage(Page):
     def _build_url(self, number):
         request = self.paginator.request
         query = request.GET.copy()
+        param = settings.PAGINATOR_QUERY
         if number > 1:
-            query[PAGE_PARAM] = number - 1
-        elif PAGE_PARAM in query:
-            query.pop(PAGE_PARAM)
+            query[param] = number - 1
+        elif param in query:
+            query.pop(param)
         return urlparse.urlunsplit((None, None, request.path, query.urlencode(), None))
 
     def first_url(self):
@@ -30,10 +28,11 @@ class DrupalPage(Page):
 
     def _pager_start(self):
         num_pages = self.paginator.num_pages
-        return 1 if num_pages < NUM_ITEMS else max(1, self.number - NUM_ITEMS // 2)
+        num_items = settings.PAGINATOR_ITEMS
+        return 1 if num_pages < num_items else max(1, self.number - num_items // 2)
 
     def _pager_end(self):
-        return min(self.paginator.num_pages + 1, self._pager_start() + NUM_ITEMS)
+        return min(self.paginator.num_pages + 1, self._pager_start() + settings.PAGINATOR_ITEMS)
 
     def pager_items(self):
         for number in range(self._pager_start(), self._pager_end()):
@@ -50,7 +49,7 @@ class DrupalPaginator(Paginator):
 
     def __init__(self, object_list, per_page=None, request=None, *args, **kwargs):
         self.request = request
-        per_page = per_page or PAGE_SIZE
+        per_page = per_page or settings.PAGINATOR_SIZE
         super(DrupalPaginator, self).__init__(object_list, per_page, *args, **kwargs)
 
     def _get_page(self, *args, **kwargs):
@@ -59,7 +58,7 @@ class DrupalPaginator(Paginator):
     def page(self, number=None):
         if number is None:
             try:
-                number = int(self.request.GET[PAGE_PARAM])
+                number = int(self.request.GET[settings.PAGINATOR_QUERY])
             except Exception:
                 number = 0
             number = min(self.num_pages, max(1, number + 1))

@@ -90,11 +90,6 @@ class Node(Model):
         return default
     story_url.short_description = _('Story URL')
 
-    def created_str(self):
-        # The minus-notation (%-d) removes leading zeros
-        return (self.created.strftime('%b %-d %Y - %I:%M')
-                + self.created.strftime('%p').lower())
-
     def has_related_links(self):
         return self.nodelinks.filter(module='links_related').exists()
 

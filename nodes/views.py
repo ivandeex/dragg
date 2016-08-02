@@ -8,7 +8,7 @@ from lib.views import get_lang
 
 
 def node_path_view(request, path):
-    lang = get_lang(request)
+    lang = get_lang('')
     if lang:
         alias = get_object_or_404(UrlAlias, dst=path, language=lang)
     else:

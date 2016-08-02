@@ -5,7 +5,9 @@ include breadcrumb.jade
 for node in page.object_list
   article.article
     h1.article-title: a(href=node.get_absolute_url())= node.title
-    aside.article-info Submitted on {{ node.created_str() }}
+    aside.article-info
+      = 'Submitted on '
+      = node.created | timestr
     aside.article-info
       = 'in '
       for node_term in node.terms.distinct('name').order_by('name')
@@ -13,7 +15,7 @@ for node in page.object_list
         if not loop.last
           = ', '
     main.article-content
-      = node.rev.teaser|safe
+      = node.rev.teaser | safe
     a.read-more(href=node.get_absolute_url()) Read more &rArr;
 include pager.jade
 - endblock

@@ -96,6 +96,10 @@ TEMPLATES = [
                 'site_menu': 'nav.urls.site_menu',
                 'tagadelic_terms': 'nav.urls.tagadelic_terms',
             },
+            'filters': {
+                'timestr': 'lib.templatetags.timestr',
+                'timeago': 'lib.templatetags.timeago',
+            },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -182,3 +186,9 @@ else:
             'STATS_FILE': os.path.join(BASE_DIR, 'webpack/stats-prod.json')
         }
     }
+
+
+AGO_THRESHOLD_HOURS = 6
+PAGINATOR_QUERY = 'page'
+PAGINATOR_SIZE = 10
+PAGINATOR_ITEMS = 9

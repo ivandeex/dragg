@@ -4,7 +4,9 @@ extends 'base.jade'
 include breadcrumb.jade
 h1.node-title= node.title
 
-aside.article-info Submitted on {{ node.created_str() }}
+aside.article-info
+  = 'Submitted on '
+  = node.created | timestr
 aside.article-info
   = 'in '
   for term in node.terms.distinct('name').order_by('name')
@@ -13,7 +15,7 @@ aside.article-info
       = ', '
 
 main.article-content
-  = node.rev.body|safe
+  = node.rev.body | safe
 
 if node.has_related_links()
   h2.node-subtitle Related links

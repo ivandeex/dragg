@@ -6,7 +6,6 @@ from lib.paginator import DrupalPaginator
 
 
 def category_view(request, cid=None):
-    print cid
     news_title = 'News'
     if cid == 'all':
         cat = None

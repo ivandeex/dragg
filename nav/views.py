@@ -10,7 +10,7 @@ from lib.views import get_lang
 
 
 def frontpage(request):
-    lang = get_lang(request) or 'en'
+    lang = get_lang('en')
     lang_filter = Q(language=lang) | Q(language='')
     nodes = Node.objects.filter(promote=True).filter(lang_filter).order_by('-created')
     paginator = DrupalPaginator(nodes, request=request)
@@ -20,7 +20,7 @@ def frontpage(request):
 
 def term_name_view(request, name):
     path = 'tag/' + name
-    lang = get_lang(request)
+    lang = get_lang('')
     if lang:
         alias = get_object_or_404(UrlAlias, dst=path, language=lang)
     else:
@@ -34,7 +34,7 @@ def term_pk_view(request, pk, redirect=True):
     if redirect:
         return HttpResponseRedirect(term.get_absolute_url())
 
-    lang = get_lang(request) or 'en'
+    lang = get_lang('en')
     lang_filter = Q(language=lang) | Q(language='')
 
     nodes = Node.objects.filter(terms=term)

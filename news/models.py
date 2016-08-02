@@ -3,7 +3,7 @@ from django.db.models import (Model, CASCADE, SET_NULL, CharField, TextField,
                               ForeignKey, ManyToManyField)
 from unixtimestampfield.fields import UnixTimeStampField
 from django.utils.translation import ugettext_lazy as _
-from lib.paginator import PAGE_SIZE
+from django.conf import settings
 
 
 class Category(Model):
@@ -26,7 +26,7 @@ class Category(Model):
         return '/aggregator/categories/%d' % self.cid
 
     def get_latest_items(self, limit=None):
-        limit = limit or PAGE_SIZE
+        limit = limit or settings.PAGINATOR_SIZE
         return Item.objects.filter(feed__categories=self).order_by('-timestamp')[:limit]
 
 

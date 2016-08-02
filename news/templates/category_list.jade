@@ -13,8 +13,8 @@ for cat in categories
         li
           a(href=item.link)= item.title
           &ensp;&ndash;
-          =item.timestamp
-          ,&thinsp;
+          = item.timestamp | timeago
+          = ', '
           a(href=item.feed.link)= item.feed.title
 
     .news-meta

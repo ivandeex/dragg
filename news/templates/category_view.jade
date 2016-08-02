@@ -12,9 +12,9 @@ for item in page
     .news-meta
       a(href=item.feed.get_absolute_url())= item.feed.title
       &ensp;&ndash;&thinsp;
-      =item.timestamp
+      = item.timestamp | timeago
 
-    .news-body= item.description|safe
+    .news-body= item.description | safe
 
     .news-meta
       = 'Categories: '
