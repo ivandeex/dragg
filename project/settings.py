@@ -1,6 +1,7 @@
 import os
 import dj_database_url
 import django_jinja.builtins
+from django.utils.translation import ugettext_lazy as _
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -69,9 +70,11 @@ if DEBUG:
     INTERNAL_IPS = os.environ.get('INTERNAL_IPS', '127.0.0.1').split(',')
     INSTALLED_APPS += ['debug_toolbar']
 
+
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,7 +83,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
     {
@@ -121,6 +123,8 @@ TEMPLATES = [
     },
 ]
 
+
+ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
 
 
@@ -135,11 +139,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Europe/Moscow'
-USE_I18N = True
-USE_L10N = True
 USE_TZ = True
+TIME_ZONE = 'Europe/Moscow'
+
+USE_L10N = True
+
+USE_I18N = True
+LANGUAGE_COOKIE_NAME = 'lang'
+LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+    ('en-us', _('English (US)')),  # url: /path
+    ('en', _('English')),          # url: /en/path
+    ('ru', _('Russian')),          # url: /ru/path
+]
+
 
 SITES_ROOT = os.environ.get('SITES_ROOT', '/var/www/sites')
 

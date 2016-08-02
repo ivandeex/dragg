@@ -1,33 +1,19 @@
-"""project URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.9/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
 from django.conf import settings
-from django.conf.urls import url, include
+from django.conf.urls import url
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.static import serve
+from nodes import views as node_views
 
-
-urlpatterns = [
+common_patterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', node_views.frontpage),
+    url(r'^node/(?P<pk>\d+)(?:/.*)?$', node_views.view_node),
+    url(r'^(?P<path>(book|page|story)/.+)$', node_views.view_node),
     url(r'^sites/(?P<path>.*)$', serve, {'document_root': settings.SITES_ROOT}),
-    url(r'^', include('nodes.urls')),
 ]
 
-if settings.DEBUG:
-    urlpatterns += staticfiles_urlpatterns()
-else:
-    pattern = r'^%s(?P<path>.*)$' % settings.STATIC_URL.lstrip('/')
-    urlpatterns += [url(pattern, serve, {'document_root': settings.STATIC_ROOT})]
+static_regex = r'^%s(?P<path>.*)$' % settings.STATIC_URL.lstrip('/')
+static_pattern = url(static_regex, serve, {'document_root': settings.STATIC_ROOT})
+
+urlpatterns = common_patterns + i18n_patterns(*common_patterns) + [static_pattern]
