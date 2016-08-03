@@ -1,4 +1,4 @@
-Django==1.9.8
+Django==1.10
 dj-database-url==0.4.1
 django-unixtimestampfield==0.3.9
 psycopg2==2.6.2
